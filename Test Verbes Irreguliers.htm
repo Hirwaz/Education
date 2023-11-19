@@ -26,29 +26,29 @@
   )
   var verbsList03 = new Array(
     new Array("Draw", "Drawn", "Drew", "Dessiner"),
-    new Array("drink",	"drank",	"drunk",	"boire"),
-    new Array("drive",	"drove",	"driven",	"conduire"),
-    new Array("eat",	"ate",	"eaten",	"manger"),
-    new Array("fall",	"fell",	"fallen",	"tomber"),
-    new Array("feed",	"fed",	"fed",	"nourrir"),
-    new Array("feel",	"felt",	"felt",	"se sentir/ressentir"),
-    new Array("fight",	"fought",	"fought",	"se battre"),
-    new Array("find",	"found",	"found",	"trouver"),
-    new Array("fly",	"flew",	"flown",	"voler")
+    new Array("Drink",	"Drank",	"Drunk",	"Boire"),
+    new Array("Drive",	"Drove",	"Driven",	"Conduire"),
+    new Array("Eat",	"Ate",	"Eaten",	"Manger"),
+    new Array("Fall",	"Fell",	"Fallen",	"Tomber"),
+    new Array("Feed",	"Fed",	"Fed",	"Nourrir"),
+    new Array("Feel",	"Felt",	"Felt",	"Se sentir/Ressentir"),
+    new Array("Fight", "Fought",	"Fought",	"Se battre"),
+    new Array("Find",	"Found",	"Found",	"Trouver"),
+    new Array("Fly",	"Flew",	"Flown",	"Voler")
   )
   var verbsList04 = new Array(
-    new Array("forget",	"forgot",	"forgotten",	"oublier"),
-    new Array("freeze",	"froze",	"frozen",	"geler"),
-    new Array("get",	"got",	"gotten", "got",	"obtenir"),
-    new Array("give",	"gave",	"given",	"donner"),
-    new Array("go",	"went",	"gone",	"aller"),
-    new Array("grow",	"grew",	"grown",	"grandir"),
-    new Array("have",	"had",	"had",	"avoir"),
-    new Array("hear",	"heard",	"heard",	"entendre"),
-    new Array("hide",	"hid",	"hidden",	"cacher"),
-    new Array("hit",	"hit",	"hit",	"frapper")
+    new Array("Forget",	"Forgot",	"Forgotten",	"Oublier"),
+    new Array("Freeze",	"Froze",	"Frozen",	"Geler"),
+    new Array("Get",	"Got",	"Gotten", "Got",	"Obtenir"),
+    new Array("Give",	"Gave",	"Given",	"Donner"),
+    new Array("Go",	"wWnt",	"Gone",	"Aller"),
+    new Array("Grow",	"grew",	"grown",	"Grandir"),
+    new Array("Have",	"Had",	"Had",	"Avoir"),
+    new Array("Hear",	"Heard",	"Heard",	"Entendre"),
+    new Array("Hide",	"Hid",	"Hidden",	"Cacher"),
+    new Array("Hit",	"Hit",	"Hit",	"Frapper")
   )
-  var verbsGlobalList = new Array(verbsList01, verbsList02)
+  var verbsGlobalList = new Array()
   
   var global_TAB_INF = new Array("*");
   var global_TAB_SP = new Array("*");
@@ -60,7 +60,7 @@
   var TAB_Selection = new Array; // contient l'ordre aléatoire des verbes
   var TAB_Tense = new Array;  // contient l'ordre aléatoire du temps (inf=1,past=2,p.part=3,trad=4)
   var Position; // indice courant
-  var PosMaxAtteint;   // Si on a arrivé au dernier verbe
+  var PosMaxAtteint;   // indique si on a arrivé au dernier verbe
 
   var TAB_Verif1 = new Array; // réponse : (infinitif)
   var TAB_Verif2 = new Array; // réponse : (prétérit)
@@ -72,9 +72,9 @@
   var Correction3 = new Array;// correction3[i] corrigé de TAB_Verif3[i] (si faux)
   var Correction4 = new Array;// correction4[i] corrigé de TAB_Verif4[i] (si faux)
 
-  var Score;  // Score du test
+  var score;  // Score du test
   var temps;  // Temps du test
-  var Chargement = false; // Si Chargement=false (le test est lancé pour la 1ere fois)
+  var chargement = false; // Si chargement=false alors le test est lancé pour la 1ere fois
 
 
   // Initialisation de la page
@@ -164,8 +164,8 @@
     ModifiePosition(mainfrm, 1)
     temps = 0;
 
-    if (Chargement == false) { incrTemps() };
-    Chargement = true;
+    if (chargement == false) { incrTemps() };
+    chargement = true;
 
   }
 
@@ -202,7 +202,7 @@
 
     clearTimeout(timer);
     RefreshTabs(mainfrm);
-    Score = 0;
+    score = 0;
 
     var i;
     var k;
@@ -225,7 +225,7 @@
 
       if (TAB_Tense[i] != 1) {
         if (Comparer(TAB_Verif1[i], global_TAB_INF[k]) == true) {
-          Score++
+          score++
         } else {
           Correction1[i] = "(" + global_TAB_INF[k] + ")"
         }
@@ -233,7 +233,7 @@
 
       if (TAB_Tense[i] != 2) {
         if (Comparer(TAB_Verif2[i], global_TAB_SP[k]) == true) {
-          Score++
+          score++
         } else {
           Correction2[i] = "(" + global_TAB_SP[k] + ")"
         }
@@ -241,7 +241,7 @@
 
       if (TAB_Tense[i] != 3) {
         if (Comparer(TAB_Verif3[i], global_TAB_PP[k]) == true) {
-          Score++
+          score++
         } else {
           Correction3[i] = "(" + global_TAB_PP[k] + ")"
         }
@@ -249,7 +249,7 @@
 
       if (TAB_Tense[i] != 4) {
         if (Comparer(TAB_Verif4[i], global_TAB_TRAD[k]) == true) {
-          Score++
+          score++
         } else {
           Correction4[i] = "(" + global_TAB_TRAD[k] + ")"
         }
@@ -418,7 +418,7 @@
       genHtm = genHtm + '        <br /> '
 
       if (k == 0) {
-        genHtm = genHtm + ' Score: ' + Score + '/' + (nbTestVerbs * 4 - nbTestVerbs)
+        genHtm = genHtm + ' Score: ' + score + '/' + (nbTestVerbs * 4 - nbTestVerbs)
         genHtm = genHtm + '<br /> Durée du test: ' + DeSecAMin(temps)
       }
       genHtm = genHtm + '   </font> </b></center>  <br />  <table align="center" border="2">';
