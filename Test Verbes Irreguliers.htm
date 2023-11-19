@@ -59,8 +59,14 @@
 
     buildVerbArrays();
 
+    // initialize le nombre de verbe du test courant
+    nbTestVerbs = mainfrm.txt_nbverbs.value;
+    if (nbTestVerbs > nbMaxVerbs || nbTestVerbs < 5) {
+      nbTestVerbs = 10;
+      mainfrm.txt_nbverbs.value = nbTestVerbs;
+    }
+    
   }
-
 
   // Initialisation de la liste de verbes
   function buildVerbArrays() {
@@ -89,10 +95,11 @@
   // Démarrer le test
   function Demarrer(mainfrm) {
 
-    buildVerbArrays();
+    // Afiche le formulaire de test
+    testForm.removeAttribute("hidden");
 
+    // initialize le nombre de verbe du test courant
     nbTestVerbs = mainfrm.txt_nbverbs.value;
-
     if (nbTestVerbs > nbMaxVerbs || nbTestVerbs < 5) {
       nbTestVerbs = 10;
       mainfrm.txt_nbverbs.value = nbTestVerbs;
@@ -101,7 +108,7 @@
     Position = 0;
     PosMaxAtteint = false;
     validButton.setAttribute("hidden", "hidden");
-    Generation_hasard(mainfrm);
+    randomizeVerbs(mainfrm);
 
     for (var i = 1; i <= nbMaxVerbs; i++) {
       TAB_Verif1[i] = "";
@@ -160,7 +167,7 @@
 
       k = TAB_Selection[i];
 
-      // initialisation
+      // Initialisation du tableau des correctifs
       Correction1[i] = ""
       Correction2[i] = ""
       Correction3[i] = ""
@@ -252,7 +259,7 @@
 
   // Perturber les éléments d'un tableau au hasard
   // => l'ordre des verbes devient aléatoire
-  function Generation_hasard(mainfrm) {
+  function randomizeVerbs(mainfrm) {
     var i;
     for (var i = 1; i <= nbMaxVerbs; i++) {
       TAB_Selection[i] = i;
@@ -427,7 +434,7 @@
 
 </head>
 
-<body bgcolor="#000066" text="#FFFFFF" onload="Demarrer(mainfrm)">
+<body bgcolor="#000066" text="#FFFFFF" onload="pageInit()">
 
   <form method="POST" name="mainfrm">
 
@@ -436,84 +443,86 @@
       <font size="6" color="#FFFFCC">Test des verbes irréguliers</font>
     </p>  
 
-    <div align="center">
-      <center>
-        <table border="1" width="373" height="128" bgcolor="#ECE9D8">
+    <div id="testForm" hidden>
+      <div align="center">
+        <center>
+          <table border="1" width="373" height="128" bgcolor="#ECE9D8">
+            <tr>
+              <td width="170" height="18" bgcolor="#CCCCCC">
+                <font size="4" color="#000000">Temps</font>
+              </td>
+              <td width="187" height="18" bgcolor="#CCCCCC">
+                <font size="4" color="#000000">Verbe n°
+                  <input type="text" name="txt_position" size="5" readonly="readonly">
+                </font>
+              </td>
+            </tr>
+            <tr>
+              <td width="170" height="32" bgcolor="#CCCCCC">
+                <font size="4" color="#000000">Infinitif</font>
+              </td>
+              <td width="187" height="32" bgcolor="#FFFFFF">
+                <p align="center"><input type="text" name="tbox_inf" size="20" style="font-size: 12 pt">
+              </td>
+            </tr>
+            <tr>
+              <td width="170" height="30" bgcolor="#CCCCCC">
+                <font size="4" color="#000000">Prétérit</font>
+              </td>
+              <td width="187" height="32" bgcolor="#FFFFFF">
+                <p align="center"><input type="text" name="tbox_sp" size="20" style="font-size: 12 pt">
+              </td>
+            </tr>
+            <tr>
+              <td width="170" height="31" bgcolor="#CCCCCC">
+                <font size="4" color="#000000">Participe Passé</font>
+              </td>
+              <td width="187" height="32" bgcolor="#FFFFFF">
+                <p align="center"><input type="text" name="tbox_pp" size="20" style="font-size: 12 pt">
+              </td>
+            </tr>
+            <tr>
+              <td width="170" height="31" bgcolor="#CCCCCC">
+                <font size="4" color="#000000">Traduction</font>
+              </td>
+              <td width="187" height="32" bgcolor="#FFFFFF">
+                <p align="center"><input type="text" name="tbox_trad" size="20" style="font-size: 12 pt">
+              </td>
+            </tr>
+          </table>
+        </center>
+      </div>  
+
+      <div align="center">
+          <p>
+            <font color="#000000">&nbsp;
+              <input type="button" value="&lt; Précédent" onclick="ModifiePosition(mainfrm,2); checkTestCompleted()">&nbsp;
+              <input type="button" value="Suivant &gt;" onclick="ModifiePosition(mainfrm,1); checkTestCompleted()">
+            </font>
+          </p>
+      </div>
+      <div align="center">
+        <table>
           <tr>
-            <td width="170" height="18" bgcolor="#CCCCCC">
-              <font size="4" color="#000000">Temps</font>
+            <td>
+              <input type="text" name="BT_timer" value="00 : 00" style="border: outset; background: #CCCCCC; color: #000000;text-align: center" readonly="readonly" />
             </td>
-            <td width="187" height="18" bgcolor="#CCCCCC">
-              <font size="4" color="#000000">Verbe n°
-                <input type="text" name="txt_position" size="5" readonly="readonly">
-              </font>
-            </td>
-          </tr>
-          <tr>
-            <td width="170" height="32" bgcolor="#CCCCCC">
-              <font size="4" color="#000000">Infinitif</font>
-            </td>
-            <td width="187" height="32" bgcolor="#FFFFFF">
-              <p align="center"><input type="text" name="tbox_inf" size="20" style="font-size: 12 pt">
-            </td>
-          </tr>
-          <tr>
-            <td width="170" height="30" bgcolor="#CCCCCC">
-              <font size="4" color="#000000">Prétérit</font>
-            </td>
-            <td width="187" height="32" bgcolor="#FFFFFF">
-              <p align="center"><input type="text" name="tbox_sp" size="20" style="font-size: 12 pt">
-            </td>
-          </tr>
-          <tr>
-            <td width="170" height="31" bgcolor="#CCCCCC">
-              <font size="4" color="#000000">Participe Passé</font>
-            </td>
-            <td width="187" height="32" bgcolor="#FFFFFF">
-              <p align="center"><input type="text" name="tbox_pp" size="20" style="font-size: 12 pt">
-            </td>
-          </tr>
-          <tr>
-            <td width="170" height="31" bgcolor="#CCCCCC">
-              <font size="4" color="#000000">Traduction</font>
-            </td>
-            <td width="187" height="32" bgcolor="#FFFFFF">
-              <p align="center"><input type="text" name="tbox_trad" size="20" style="font-size: 12 pt">
+            <td>
+              <font color="#000000"><input type="button" class="button" hidden id="validButton" value="Corriger" style="border-style: ridge;" onclick="AfficheResultat (mainfrm,0)"></font>
             </td>
           </tr>
         </table>
-      </center>
-    </div>  
-
-    <div align="center">
-        <p>
-          <font color="#000000">&nbsp;
-            <input type="button" value="&lt; Précédent" onclick="ModifiePosition(mainfrm,2); checkTestCompleted()">&nbsp;
-            <input type="button" value="Suivant &gt;" onclick="ModifiePosition(mainfrm,1); checkTestCompleted()">
-          </font>
-        </p>
-    </div>
-    <div align="center">
-      <table>
-        <tr>
-          <td>
-            <input type="text" name="BT_timer" value="00 : 00" style="border: outset; background: #CCCCCC; color: #000000;text-align: center" readonly="readonly" />
-          </td>
-          <td>
-            <font color="#000000"><input type="button" class="button" hidden id="validButton" value="Corriger" style="border-style: ridge;" onclick="AfficheResultat (mainfrm,0)"></font>
-          </td>
-        </tr>
-      </table>
+      </div>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
     </div>
 
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
 
     <div align="center">
       <center>
