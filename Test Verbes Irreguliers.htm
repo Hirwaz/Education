@@ -55,7 +55,7 @@
 
 
   // Initialisation de la page
-  function pageInit(){
+  function initPage(){
 
     buildVerbArrays();
 
@@ -70,6 +70,23 @@
 
   // Initialisation de la liste de verbes
   function buildVerbArrays() {
+    // Reinit de la liste globale de verbes à utiliser pour le test
+    verbsGlobalList.length = 0
+    global_TAB_INF = new Array("*");
+    global_TAB_SP = new Array("*");
+    global_TAB_PP = new Array("*");
+    global_TAB_TRAD = new Array("*");
+    if(document.getElementById("checklist01").checked == true)
+      verbsGlobalList.push(verbsList01);
+    if(document.getElementById("checklist02").checked == true)
+      verbsGlobalList.push(verbsList02);
+
+    if(verbsGlobalList.length == 0)
+      document.getElementById("startupButton").setAttribute("disabled", "disabled");
+    else
+      document.getElementById("startupButton").removeAttribute("disabled");
+
+    // Initialisation des différents tableaux avec les temps des verbes
     nbMaxVerbs = 0;
     for(let i = 0; i < verbsGlobalList.length; i++) {
       let verbsList = verbsGlobalList[i];
@@ -434,7 +451,7 @@
 
 </head>
 
-<body bgcolor="#000066" text="#FFFFFF" onload="pageInit()">
+<body bgcolor="#000066" text="#FFFFFF" onload="initPage()">
 
   <form method="POST" name="mainfrm">
 
@@ -536,13 +553,23 @@
           </tr>
           <tr>
             <td>
-              <span class="nbVerbsConfig" id="nbVerbsConfig" style="color:#000000">test</span>
+              <span class="nbVerbsConfig" id="nbVerbsConfig" style="color:#000000"></span>
               <input type="text" name="txt_nbverbs" size="3" value="10">
             </td>
           </tr>
           <tr>
             <td>
-              <input type="button" value=" Valider " onclick="Demarrer(mainfrm)">
+              <input type="checkbox" id="checklist01" checked onchange="buildVerbArrays()" /><label for="checkbox" style="color:#000000">Liste 1</label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input type="checkbox" id="checklist02" onchange="buildVerbArrays()" /><label for="checkbox" style="color:#000000">Liste 2</label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input type="button" id="startupButton" value=" Démarrer " onclick="Demarrer(mainfrm)">
             </td>
           </tr>
         </table>
