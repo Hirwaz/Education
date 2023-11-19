@@ -24,7 +24,30 @@
     new Array("Cut", "Cut", "Cut", "Couper"),
     new Array("Do", "Did", "Done", "Faire")
   )
-
+  var verbsList03 = new Array(
+    new Array("Draw", "Drawn", "Drew", "Dessiner"),
+    new Array("drink",	"drank",	"drunk",	"boire"),
+    new Array("drive",	"drove",	"driven",	"conduire"),
+    new Array("eat",	"ate",	"eaten",	"manger"),
+    new Array("fall",	"fell",	"fallen",	"tomber"),
+    new Array("feed",	"fed",	"fed",	"nourrir"),
+    new Array("feel",	"felt",	"felt",	"se sentir/ressentir"),
+    new Array("fight",	"fought",	"fought",	"se battre"),
+    new Array("find",	"found",	"found",	"trouver"),
+    new Array("fly",	"flew",	"flown",	"voler")
+  )
+  var verbsList04 = new Array(
+    new Array("forget",	"forgot",	"forgotten",	"oublier"),
+    new Array("freeze",	"froze",	"frozen",	"geler"),
+    new Array("get",	"got",	"gotten", "got",	"obtenir"),
+    new Array("give",	"gave",	"given",	"donner"),
+    new Array("go",	"went",	"gone",	"aller"),
+    new Array("grow",	"grew",	"grown",	"grandir"),
+    new Array("have",	"had",	"had",	"avoir"),
+    new Array("hear",	"heard",	"heard",	"entendre"),
+    new Array("hide",	"hid",	"hidden",	"cacher"),
+    new Array("hit",	"hit",	"hit",	"frapper")
+  )
   var verbsGlobalList = new Array(verbsList01, verbsList02)
   
   var global_TAB_INF = new Array("*");
@@ -80,6 +103,10 @@
       verbsGlobalList.push(verbsList01);
     if(document.getElementById("checklist02").checked == true)
       verbsGlobalList.push(verbsList02);
+    if(document.getElementById("checklist03").checked == true)
+      verbsGlobalList.push(verbsList03);
+    if(document.getElementById("checklist04").checked == true)
+      verbsGlobalList.push(verbsList04);
 
     if(verbsGlobalList.length == 0)
       document.getElementById("startupButton").setAttribute("disabled", "disabled");
@@ -565,6 +592,16 @@
           <tr>
             <td>
               <input type="checkbox" id="checklist02" onchange="buildVerbArrays()" /><label for="checkbox" style="color:#000000">Liste 2</label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input type="checkbox" id="checklist03" onchange="buildVerbArrays()" /><label for="checkbox" style="color:#000000">Liste 3</label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input type="checkbox" id="checklist04" onchange="buildVerbArrays()" /><label for="checkbox" style="color:#000000">Liste 4</label>
             </td>
           </tr>
           <tr>
