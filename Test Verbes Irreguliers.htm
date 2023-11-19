@@ -1,0 +1,552 @@
+<script language="JavaScript" type="text/javascript">
+
+  var verbsList01 = new Array(
+    new Array("Be", "was/were", "Been", "Etre"),
+    new Array("Beat", "Beat", "Beaten", "Battre"),
+    new Array("Become", "Became", "Become", "Devenir"),
+    new Array("Begin", "Began", "Begun", "Commencer"),
+    new Array("Bet", "Bet", "Bet", "Parier"),
+    new Array("Bite", "Bit", "Bitten", "Mordre"),
+    new Array("Bleed", "Bled", "Bled", "Saigner"),
+    new Array("Blow", "Blew", "Blown", "Souffler"),
+    new Array("Break", "Broke", "Broken", "Casser"),
+    new Array("Bring", "Brought", "Brought", "Apporter")
+  )
+  var verbsList02 = new Array(
+    new Array("Build", "Built", "Built", "Construire"),
+    new Array("Burn", "Burnt", "Burnt", "Brûler"),
+    new Array("Burst", "Burst", "Burst", "éclater"),
+    new Array("Buy", "Bought", "Bought", "Acheter"),
+    new Array("Catch", "Caught", "Caught", "Attraper"),
+    new Array("Choose", "Chose", "Chosen", "Choisir"),
+    new Array("Come", "Came", "Come", "Venir"),
+    new Array("Cost", "Cost", "Cost", "Coûter"),
+    new Array("Cut", "Cut", "Cut", "Couper"),
+    new Array("Do", "Did", "Done", "Faire")
+  )
+
+  var verbsGlobalList = new Array(verbsList01, verbsList02)
+  
+  var global_TAB_INF = new Array("*");
+  var global_TAB_SP = new Array("*");
+  var global_TAB_PP = new Array("*");
+  var global_TAB_TRAD = new Array("*");
+
+  var nbMaxVerbs; // nombre total de verbe irréguliers connus dans la liste (= nombre maximal de verbes qu'on peut tester)
+  var nbTestVerbs; // Le nombre de verbes pour le test courant
+  var TAB_Selection = new Array; // contient l'ordre aléatoire des verbes
+  var TAB_Tense = new Array;  // contient l'ordre aléatoire du temps (inf=1,past=2,p.part=3,trad=4)
+  var Position; // indice courant
+  var PosMaxAtteint;   // Si on a arrivé au dernier verbe
+
+  var TAB_Verif1 = new Array; // réponse : (infinitif)
+  var TAB_Verif2 = new Array; // réponse : (prétérit)
+  var TAB_Verif3 = new Array; // réponse : (participe passé)
+  var TAB_Verif4 = new Array; // réponse : (traduction)
+
+  var Correction1 = new Array;// correction1[i] corrigé de TAB_Verif1[i] (si faux)
+  var Correction2 = new Array;// correction2[i] corrigé de TAB_Verif2[i] (si faux)
+  var Correction3 = new Array;// correction3[i] corrigé de TAB_Verif3[i] (si faux)
+  var Correction4 = new Array;// correction4[i] corrigé de TAB_Verif4[i] (si faux)
+
+  var Score;  // Score du test
+  var temps;  // Temps du test
+  var Chargement = false; // Si Chargement=false (le test est lancé pour la 1ere fois)
+
+
+  // Initialisation de la page
+  function pageInit(){
+
+    buildVerbArrays();
+
+  }
+
+
+  // Initialisation de la liste de verbes
+  function buildVerbArrays() {
+    nbMaxVerbs = 0;
+    for(let i = 0; i < verbsGlobalList.length; i++) {
+      let verbsList = verbsGlobalList[i];
+      for(let j = 0; j < verbsList.length; j++) {
+        let verb = verbsList[j];
+        global_TAB_INF.push(verb[0]);
+        global_TAB_SP.push(verb[1]);
+        global_TAB_PP.push(verb[2]);
+        global_TAB_TRAD.push(verb[3]);
+        nbMaxVerbs++;
+      }
+    }
+    console.log(global_TAB_INF);
+    console.log(global_TAB_SP);
+    console.log(global_TAB_PP);
+    console.log(global_TAB_TRAD);
+    console.log(nbMaxVerbs);
+
+    document.getElementById("nbVerbsConfig").textContent = "Nombre de verbes (" + this.nbMaxVerbs + " max) = ";
+  }
+
+
+  // Démarrer le test
+  function Demarrer(mainfrm) {
+
+    buildVerbArrays();
+
+    nbTestVerbs = mainfrm.txt_nbverbs.value;
+
+    if (nbTestVerbs > nbMaxVerbs || nbTestVerbs < 5) {
+      nbTestVerbs = 10;
+      mainfrm.txt_nbverbs.value = nbTestVerbs;
+    }
+
+    Position = 0;
+    PosMaxAtteint = false;
+    validButton.setAttribute("hidden", "hidden");
+    Generation_hasard(mainfrm);
+
+    for (var i = 1; i <= nbMaxVerbs; i++) {
+      TAB_Verif1[i] = "";
+      TAB_Verif2[i] = "";
+      TAB_Verif3[i] = "";
+      TAB_Verif4[i] = "";
+    }
+
+    ModifiePosition(mainfrm, 1)
+    temps = 0;
+
+    if (Chargement == false) { incrTemps() };
+    Chargement = true;
+
+  }
+
+  // Supprime les espaces à gauche et à droite d'une chaine
+  function Trim(mot) {
+    var l;
+    l = mot.length;
+    for (var i = 1; i <= l; i++) {
+      mot = mot.replace(" ", "");
+    }
+    return mot;
+  }
+
+  // Génération du format du compteur ( X min et Y sec)
+  function DeSecAMin(t) {
+    var s;
+    var min;
+    var sec;
+    min = Math.floor(t / 60);
+    sec = t % 60;
+    s = min + " min and " + sec + " sec";
+    return s;
+  }
+
+  // Incrémentation du compteur chaque seconde
+  function incrTemps() {
+    timer = setTimeout("incrTemps()", 1000);
+    mainfrm.BT_timer.value = DeSecAMin(temps)
+    temps++;
+  }
+
+  // Corriger les fautes
+  function Corriger(mainfrm) {
+
+    clearTimeout(timer);
+    RefreshTabs(mainfrm);
+    Score = 0;
+
+    var i;
+    var k;
+
+    for (var i = 1; i <= nbTestVerbs; i++) {
+
+      k = TAB_Selection[i];
+
+      // initialisation
+      Correction1[i] = ""
+      Correction2[i] = ""
+      Correction3[i] = ""
+      Correction4[i] = ""
+
+
+      TAB_Verif1[i] = Trim(TAB_Verif1[i].toLowerCase());
+      TAB_Verif2[i] = Trim(TAB_Verif2[i].toLowerCase());
+      TAB_Verif3[i] = Trim(TAB_Verif3[i].toLowerCase());
+      TAB_Verif4[i] = Trim(TAB_Verif4[i].toLowerCase());
+
+      if (TAB_Tense[i] != 1) {
+        if (Comparer(TAB_Verif1[i], global_TAB_INF[k]) == true) {
+          Score++
+        } else {
+          Correction1[i] = "(" + global_TAB_INF[k] + ")"
+        }
+      }
+
+      if (TAB_Tense[i] != 2) {
+        if (Comparer(TAB_Verif2[i], global_TAB_SP[k]) == true) {
+          Score++
+        } else {
+          Correction2[i] = "(" + global_TAB_SP[k] + ")"
+        }
+      }
+
+      if (TAB_Tense[i] != 3) {
+        if (Comparer(TAB_Verif3[i], global_TAB_PP[k]) == true) {
+          Score++
+        } else {
+          Correction3[i] = "(" + global_TAB_PP[k] + ")"
+        }
+      }
+
+      if (TAB_Tense[i] != 4) {
+        if (Comparer(TAB_Verif4[i], global_TAB_TRAD[k]) == true) {
+          Score++
+        } else {
+          Correction4[i] = "(" + global_TAB_TRAD[k] + ")"
+        }
+      }
+
+    }
+  }
+
+
+  // Affiche les verbes stockés dans les textBox
+  function Memoire(mainfrm) {
+    mainfrm.tbox_inf.value = TAB_Verif1[Position];
+    mainfrm.tbox_sp.value = TAB_Verif2[Position];
+    mainfrm.tbox_pp.value = TAB_Verif3[Position];
+    mainfrm.tbox_trad.value = TAB_Verif4[Position];
+  }
+
+
+  // Comparer deux chaines de caractères
+  function Comparer(mot1, mot2) {
+    var m;
+    var condition;
+    if (mot2 === '') {
+        return false;
+    } else {
+    mot2 = mot2.toLowerCase()
+    m = mot2.split("/");  // Dans le cas où il existe 2 possibilités de réponse
+    // m[O]: 1ere possibilité et m[1]: 2�me possibilité
+
+    condition = (mot1 == m[0]) || (mot1 == m[1]);
+    return condition;
+      
+    }
+  }
+
+
+  // Générateur de nombres aléatoires dans l'intervalle [1,m]
+  function rnd(mainfrm, m) {
+    var RETrnd;
+    RETrnd = Math.floor(Math.random() * m) + 1;
+    return RETrnd;
+  }
+
+  // Permuter deux éléments d'un tableau
+  function permut(indice1, indice2) {
+    var aux;
+    aux = TAB_Selection[indice1];
+    TAB_Selection[indice1] = TAB_Selection[indice2];
+    TAB_Selection[indice2] = aux;
+  }
+
+  // Perturber les éléments d'un tableau au hasard
+  // => l'ordre des verbes devient aléatoire
+  function Generation_hasard(mainfrm) {
+    var i;
+    for (var i = 1; i <= nbMaxVerbs; i++) {
+      TAB_Selection[i] = i;
+      TAB_Tense[i] = rnd(mainfrm, 4)
+    }
+    for (var i = 1; i <= nbMaxVerbs; i++) {
+      permut(rnd(mainfrm, nbMaxVerbs), rnd(mainfrm, nbMaxVerbs));
+    }
+  }
+
+
+  // Affectation des valeurs du TextBox vers le tableau.
+  function RefreshTabs(mainfrm) {
+    TAB_Verif1[Position] = mainfrm.tbox_inf.value;
+    TAB_Verif2[Position] = mainfrm.tbox_sp.value;
+    TAB_Verif3[Position] = mainfrm.tbox_pp.value;
+    TAB_Verif4[Position] = mainfrm.tbox_trad.value;
+
+  }
+
+
+  // Modifie la postion (verbe suivant / verbe précédent)
+  function ModifiePosition(mainfrm, sens) {
+    RefreshTabs(mainfrm);
+    if (sens == 1) {
+      if (Position < nbTestVerbs) {
+        Position++;
+      }
+    } else {
+      if (Position > 1) {
+        Position--;
+      }
+    }
+    if (Position == nbTestVerbs) {
+      PosMaxAtteint = true;
+    }
+    mainfrm.txt_position.value = Position + "/" + nbTestVerbs;
+    var hasard_pos;
+    hasard_pos = TAB_Selection[Position];
+
+    Memoire(mainfrm);
+    switch (TAB_Tense[Position]) {
+      case 1:
+        mainfrm.tbox_inf.value = global_TAB_INF[hasard_pos];
+        mainfrm.tbox_sp.select();
+        break;
+      case 2:
+        mainfrm.tbox_sp.value = global_TAB_SP[hasard_pos];
+        mainfrm.tbox_inf.select();
+        break;
+      case 3:
+        mainfrm.tbox_pp.value = global_TAB_PP[hasard_pos];
+        mainfrm.tbox_inf.select();
+        break;
+      case 4:
+        mainfrm.tbox_trad.value = global_TAB_TRAD[hasard_pos];
+        mainfrm.tbox_inf.select();
+        break;
+    }
+
+  }
+
+
+  // Génération d'un document HTML pour
+  // k=0 : affiche le résulat du test
+  // k=1 affiche la liste des verbes irréguliers
+  function AfficheResultat(mainfrm, k) {
+
+    var max;
+
+    if (PosMaxAtteint == true || k == 1) {
+
+      if (k == 0) {
+        Corriger(mainfrm);
+        max = nbTestVerbs;
+      } else {
+        max = nbMaxVerbs;
+        for (var i = 1; i <= max; i++) {
+
+          Correction1[i] = ""
+          Correction2[i] = ""
+          Correction3[i] = ""
+          Correction4[i] = ""
+
+
+          TAB_Verif1[i] = global_TAB_INF[i];
+          TAB_Verif2[i] = global_TAB_SP[i];
+          TAB_Verif3[i] = global_TAB_PP[i];
+          TAB_Verif4[i] = global_TAB_TRAD[i];
+        }
+        console.log(TAB_Verif1);
+        console.log(TAB_Verif2);
+        console.log(TAB_Verif3);
+        console.log(TAB_Verif4);
+      }
+
+      var genHtm;
+
+      genHtm = '<html><body bgcolor="#000066"  text="#FFFFFF">';
+
+      if (k == 0) {
+        genHtm = genHtm + '<center><font size="5"  color="#00FF99"><u><b>Correction</b></u></font></center>';
+      } else {
+        genHtm = genHtm + '<center><font size="5"  color="#00FF99"><u>Table des verbes irréguliers</u></font></center>';
+      }
+
+
+      genHtm = genHtm + '       <br />';
+
+      genHtm = genHtm + ' <hr align="center" />'
+      genHtm = genHtm + '       <center><b> <font size="3" color="#CC0000">'
+      genHtm = genHtm + '        <br /> '
+
+      if (k == 0) {
+        genHtm = genHtm + ' Score: ' + Score + '/' + (nbTestVerbs * 4 - nbTestVerbs)
+        genHtm = genHtm + '<br /> Durée du test: ' + DeSecAMin(temps)
+      }
+      genHtm = genHtm + '   </font> </b></center>  <br />  <table align="center" border="2">';
+      genHtm = genHtm + '        <tr>';
+      genHtm = genHtm + '          <td><b><center>Verb n°</center></b></td>';
+      genHtm = genHtm + '                <td><b><center>Infinitif</center></b></td>';
+      genHtm = genHtm + '         <td><b><center>Prétérit</center></b></td>';
+      genHtm = genHtm + '          <td><b><center>Participe Passé</center></b></td>';
+      genHtm = genHtm + '          <td><b><center>Traduction</center></b></td>';
+      genHtm = genHtm + '        </tr>';
+
+
+
+
+      for (var i = 1; i <= max; i++) {
+
+        genHtm = genHtm + '  <tr> <td><center><b>' + i + '</b></center></td>';
+
+        genHtm = genHtm + '<td bgcolor="#000000">' + TAB_Verif1[i] + '<font size="3" color="#FF0000"><b>' + Correction1[i] + '</b></font></td>';
+        genHtm = genHtm + '<td bgcolor="#000000">' + TAB_Verif2[i] + '<font size="3" color="#FF0000"><b>' + Correction2[i] + '</b></font></td>';
+        genHtm = genHtm + '<td bgcolor="#000000">' + TAB_Verif3[i] + '<font size="3" color="#FF0000"><b>' + Correction3[i] + '</b></font></td>';
+        genHtm = genHtm + '<td bgcolor="#000000">' + TAB_Verif4[i] + '<font size="3" color="#FF0000"><b>' + Correction4[i] + '</b></font></td>';
+
+      }
+
+
+      genHtm = genHtm + '  </tr>  </table> <br />  </body></html>';
+      genHtm = genHtm + '<center><input type="button" onclick="window.location.reload(false)" value="Retour"/></center> </form>'
+
+      document.write(genHtm);
+
+    } // Fin  de la condition
+  } // Fin de la fonction
+
+  // Fonction pour tester si le test est terminé
+  function checkTestCompleted() {
+    if (PosMaxAtteint == true) {   
+        validButton.style.backgroundColor = "green";
+        validButton.removeAttribute("hidden");
+    }
+  }
+
+</script>
+
+
+<html>
+
+<head>
+  <title>Test des verbes irréguliers</title>
+  
+  <style>
+    .button{
+      height: 3rem;
+      font-size: 1.50em;
+    }
+  </style>
+
+</head>
+
+<body bgcolor="#000066" text="#FFFFFF" onload="Demarrer(mainfrm)">
+
+  <form method="POST" name="mainfrm">
+
+    <p>&nbsp;</p>
+    <p align="center">
+      <font size="6" color="#FFFFCC">Test des verbes irréguliers</font>
+    </p>  
+
+    <div align="center">
+      <center>
+        <table border="1" width="373" height="128" bgcolor="#ECE9D8">
+          <tr>
+            <td width="170" height="18" bgcolor="#CCCCCC">
+              <font size="4" color="#000000">Temps</font>
+            </td>
+            <td width="187" height="18" bgcolor="#CCCCCC">
+              <font size="4" color="#000000">Verbe n°
+                <input type="text" name="txt_position" size="5" readonly="readonly">
+              </font>
+            </td>
+          </tr>
+          <tr>
+            <td width="170" height="32" bgcolor="#CCCCCC">
+              <font size="4" color="#000000">Infinitif</font>
+            </td>
+            <td width="187" height="32" bgcolor="#FFFFFF">
+              <p align="center"><input type="text" name="tbox_inf" size="20" style="font-size: 12 pt">
+            </td>
+          </tr>
+          <tr>
+            <td width="170" height="30" bgcolor="#CCCCCC">
+              <font size="4" color="#000000">Prétérit</font>
+            </td>
+            <td width="187" height="32" bgcolor="#FFFFFF">
+              <p align="center"><input type="text" name="tbox_sp" size="20" style="font-size: 12 pt">
+            </td>
+          </tr>
+          <tr>
+            <td width="170" height="31" bgcolor="#CCCCCC">
+              <font size="4" color="#000000">Participe Passé</font>
+            </td>
+            <td width="187" height="32" bgcolor="#FFFFFF">
+              <p align="center"><input type="text" name="tbox_pp" size="20" style="font-size: 12 pt">
+            </td>
+          </tr>
+          <tr>
+            <td width="170" height="31" bgcolor="#CCCCCC">
+              <font size="4" color="#000000">Traduction</font>
+            </td>
+            <td width="187" height="32" bgcolor="#FFFFFF">
+              <p align="center"><input type="text" name="tbox_trad" size="20" style="font-size: 12 pt">
+            </td>
+          </tr>
+        </table>
+      </center>
+    </div>  
+
+    <div align="center">
+        <p>
+          <font color="#000000">&nbsp;
+            <input type="button" value="&lt; Précédent" onclick="ModifiePosition(mainfrm,2); checkTestCompleted()">&nbsp;
+            <input type="button" value="Suivant &gt;" onclick="ModifiePosition(mainfrm,1); checkTestCompleted()">
+          </font>
+        </p>
+    </div>
+    <div align="center">
+      <table>
+        <tr>
+          <td>
+            <input type="text" name="BT_timer" value="00 : 00" style="border: outset; background: #CCCCCC; color: #000000;text-align: center" readonly="readonly" />
+          </td>
+          <td>
+            <font color="#000000"><input type="button" class="button" hidden id="validButton" value="Corriger" style="border-style: ridge;" onclick="AfficheResultat (mainfrm,0)"></font>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+
+    <div align="center">
+      <center>
+        <table width="634" height="129" bgcolor="#ECE9D8" style="border: outset">
+          <tr>
+            <td>
+              <p align="center">
+                <font color="#000000">CONFIGURATION DU TEST</font>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <span class="nbVerbsConfig" id="nbVerbsConfig" style="color:#000000">test</span>
+              <input type="text" name="txt_nbverbs" size="3" value="10">
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input type="button" value=" Valider " onclick="Demarrer(mainfrm)">
+            </td>
+          </tr>
+        </table>
+      </center>
+    </div>
+
+    <p align="center">
+      <font color="#000000"><input type="button" value="Table des verbes irréguliers" onclick="AfficheResultat (mainfrm,1)"></font>
+    </p>
+    
+
+  </form>
+
+</body>
+
+</html>
