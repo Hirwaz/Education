@@ -60,7 +60,7 @@
     new Array("mean",	"meant",	"meant",	"signifier"),
     new Array("meet",	"met",	"met",	"rencontrer")
   )
-    var verbsList6 = new Array(
+  var verbsList06 = new Array(
     new Array("pay",	"paid",	"paid",	"payer"),
     new Array("put", "put",	"put",	"mettre"),
     new Array("read",	"read",	"read",	"lire"),
@@ -72,7 +72,7 @@
     new Array("sell",	"sold",	"sold",	"vendre"),
     new Array("send",	"sent",	"sent",	"envoyer")
   )
-      var verbsList7 = new Array(
+  var verbsList07 = new Array(
     new Array("set",	"set",	"set",	"fixer"),
     new Array("shake",	"shook",	"shaken",	"secouer"),
     new Array("shine",	"shone",	"shone",	"briller"),
@@ -84,7 +84,7 @@
     new Array("smell",	"smelt",	"smelt",	"sentir"),
     new Array("speak",	"spoke",	"spoken",	"parler")
   )
-        var verbsList8 = new Array(
+  var verbsList08 = new Array(
     new Array("spend",	"spent",	"spent",	"dépenser/passer(du temps)"),
     new Array("stand",	"stood",	"stood",	"se tenir debout"),
     new Array("steal",	"stole",	"stolen",	"voler/dérober"),
@@ -96,7 +96,7 @@
     new Array("think",	"thought",	"thought",	"penser"),
     new Array("throw",	"threw",	"thrown",	"jeter")
   )
-         var verbsList8 = new Array(
+  var verbsList09 = new Array(
     new Array("understand",	"understood",	"understood",	"comprendre"),
     new Array("wake up",	"woke up",	"woken up",	"réveiller"),
     new Array("wear",	"wore",	"worn",	"porter"),
@@ -162,6 +162,16 @@
       verbsGlobalList.push(verbsList03);
     if(document.getElementById("checklist04").checked == true)
       verbsGlobalList.push(verbsList04);
+    if(document.getElementById("checklist05").checked == true)
+      verbsGlobalList.push(verbsList05);
+    if(document.getElementById("checklist06").checked == true)
+      verbsGlobalList.push(verbsList06);
+    if(document.getElementById("checklist07").checked == true)
+      verbsGlobalList.push(verbsList07);
+    if(document.getElementById("checklist08").checked == true)
+      verbsGlobalList.push(verbsList08);
+    if(document.getElementById("checklist09").checked == true)
+      verbsGlobalList.push(verbsList09);
 
     if(verbsGlobalList.length == 0)
       document.getElementById("startupButton").setAttribute("disabled", "disabled");
@@ -657,6 +667,31 @@
           <tr>
             <td>
               <input type="checkbox" id="checklist04" onchange="buildVerbArrays()" /><label for="checkbox" style="color:#000000">Liste 4</label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input type="checkbox" id="checklist05" onchange="buildVerbArrays()" /><label for="checkbox" style="color:#000000">Liste 5</label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input type="checkbox" id="checklist06" onchange="buildVerbArrays()" /><label for="checkbox" style="color:#000000">Liste 6</label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input type="checkbox" id="checklist07" onchange="buildVerbArrays()" /><label for="checkbox" style="color:#000000">Liste 7</label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input type="checkbox" id="checklist08" onchange="buildVerbArrays()" /><label for="checkbox" style="color:#000000">Liste 8</label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input type="checkbox" id="checklist09" onchange="buildVerbArrays()" /><label for="checkbox" style="color:#000000">Liste 9</label>
             </td>
           </tr>
           <tr>
