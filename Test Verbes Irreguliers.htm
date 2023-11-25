@@ -26,29 +26,84 @@
   )
   var verbsList03 = new Array(
     new Array("Draw", "Drawn", "Drew", "Dessiner"),
-    new Array("drink",	"drank",	"drunk",	"boire"),
-    new Array("drive",	"drove",	"driven",	"conduire"),
-    new Array("eat",	"ate",	"eaten",	"manger"),
-    new Array("fall",	"fell",	"fallen",	"tomber"),
-    new Array("feed",	"fed",	"fed",	"nourrir"),
-    new Array("feel",	"felt",	"felt",	"se sentir/ressentir"),
-    new Array("fight",	"fought",	"fought",	"se battre"),
-    new Array("find",	"found",	"found",	"trouver"),
-    new Array("fly",	"flew",	"flown",	"voler")
+    new Array("Drink",	"Drank",	"Drunk",	"Boire"),
+    new Array("Drive",	"Drove",	"Driven",	"Conduire"),
+    new Array("Eat",	"Ate",	"Eaten",	"Manger"),
+    new Array("Fall",	"Fell",	"Fallen",	"Tomber"),
+    new Array("Feed",	"Fed",	"Fed",	"Nourrir"),
+    new Array("Feel",	"Felt",	"Felt",	"Se sentir/Ressentir"),
+    new Array("Fight", "Fought",	"Fought",	"Se battre"),
+    new Array("Find",	"Found",	"Found",	"Trouver"),
+    new Array("Fly",	"Flew",	"Flown",	"Voler")
   )
   var verbsList04 = new Array(
-    new Array("forget",	"forgot",	"forgotten",	"oublier"),
-    new Array("freeze",	"froze",	"frozen",	"geler"),
-    new Array("get",	"got",	"gotten", "got",	"obtenir"),
-    new Array("give",	"gave",	"given",	"donner"),
-    new Array("go",	"went",	"gone",	"aller"),
-    new Array("grow",	"grew",	"grown",	"grandir"),
-    new Array("have",	"had",	"had",	"avoir"),
-    new Array("hear",	"heard",	"heard",	"entendre"),
-    new Array("hide",	"hid",	"hidden",	"cacher"),
-    new Array("hit",	"hit",	"hit",	"frapper")
+    new Array("Forget",	"Forgot",	"Forgotten",	"Oublier"),
+    new Array("Freeze",	"Froze",	"Frozen",	"Geler"),
+    new Array("Get",	"Got",	"Gotten", "Got",	"Obtenir"),
+    new Array("Give",	"Gave",	"Given",	"Donner"),
+    new Array("Go",	"wWnt",	"Gone",	"Aller"),
+    new Array("Grow",	"grew",	"grown",	"Grandir"),
+    new Array("Have",	"Had",	"Had",	"Avoir"),
+    new Array("Hear",	"Heard",	"Heard",	"Entendre"),
+    new Array("Hide",	"Hid",	"Hidden",	"Cacher"),
+    new Array("Hit",	"Hit",	"Hit",	"Frapper")
   )
-  var verbsGlobalList = new Array(verbsList01, verbsList02)
+  var verbsList05 = new Array(
+    new Array("hold",	"held",	"held", "tenir"),
+    new Array("hurt",	"hurt",	"hurt",	"blesser"),
+    new Array("keep",	"kept",	"kept",	"garder"),
+    new Array("know",	"knew",	"known", "connaître/savoir"),
+    new Array("learn",	"learnt",	"learnt",	"apprendre"),
+    new Array("leave",	"left",	"left",	"laisser/quitter/partir"),
+    new Array("lose",	"lost",	"lost",	"perdre"),
+    new Array("make",	"made",	"made",	"fabriquer"),
+    new Array("mean",	"meant",	"meant",	"signifier"),
+    new Array("meet",	"met",	"met",	"rencontrer")
+  )
+  var verbsList06 = new Array(
+    new Array("pay",	"paid",	"paid",	"payer"),
+    new Array("put", "put",	"put",	"mettre"),
+    new Array("read",	"read",	"read",	"lire"),
+    new Array("ride",	"rode",	"ridden",	"aller à bicyclette"),
+    new Array("ring",	"rang",	"rung",	"sonner, téléphoner"),
+    new Array("run",	"ran",	"run",	"courir"),
+    new Array("say",	"said",	"said",	"dire"),
+    new Array("see",	"saw",	"seen",	"voir"),
+    new Array("sell",	"sold",	"sold",	"vendre"),
+    new Array("send",	"sent",	"sent",	"envoyer")
+  )
+  var verbsList07 = new Array(
+    new Array("set",	"set",	"set",	"fixer"),
+    new Array("shake",	"shook",	"shaken",	"secouer"),
+    new Array("shine",	"shone",	"shone",	"briller"),
+    new Array("shoot",	"shot",	"shot",	"tirer"),
+    new Array("shut",	"shut",	"shut",	"fermer"),
+    new Array("sing",	"sang",	"sung",	"chanter"),
+    new Array("sit",	"sat",	"sat",	"s'asseoir"),
+    new Array("sleep",	"slept",	"slept",	"dormir"),
+    new Array("smell",	"smelt",	"smelt",	"sentir"),
+    new Array("speak",	"spoke",	"spoken",	"parler")
+  )
+  var verbsList08 = new Array(
+    new Array("spend",	"spent",	"spent",	"dépenser/passer(du temps)"),
+    new Array("stand",	"stood",	"stood",	"se tenir debout"),
+    new Array("steal",	"stole",	"stolen",	"voler/dérober"),
+    new Array("swim",	"swam",	"swum",	"nager"),
+    new Array("take",	"took",	"taken",	"prendre"),
+    new Array("teach",	"taught",	"taught",	"enseigner"),
+    new Array("tear",	"tore",	"torn",	"déchirer"),
+    new Array("tell",	"told",	"told",	"dire/raconter"),
+    new Array("think",	"thought",	"thought",	"penser"),
+    new Array("throw",	"threw",	"thrown",	"jeter")
+  )
+  var verbsList09 = new Array(
+    new Array("understand",	"understood",	"understood",	"comprendre"),
+    new Array("wake up",	"woke up",	"woken up",	"réveiller"),
+    new Array("wear",	"wore",	"worn",	"porter"),
+    new Array("win",	"won",	"won",	"gagner"),
+    new Array("write",	"wrote",	"written",	"écrire")
+  )
+  var verbsGlobalList = new Array()
   
   var global_TAB_INF = new Array("*");
   var global_TAB_SP = new Array("*");
@@ -60,7 +115,7 @@
   var TAB_Selection = new Array; // contient l'ordre aléatoire des verbes
   var TAB_Tense = new Array;  // contient l'ordre aléatoire du temps (inf=1,past=2,p.part=3,trad=4)
   var Position; // indice courant
-  var PosMaxAtteint;   // Si on a arrivé au dernier verbe
+  var PosMaxAtteint;   // indique si on a arrivé au dernier verbe
 
   var TAB_Verif1 = new Array; // réponse : (infinitif)
   var TAB_Verif2 = new Array; // réponse : (prétérit)
@@ -72,9 +127,9 @@
   var Correction3 = new Array;// correction3[i] corrigé de TAB_Verif3[i] (si faux)
   var Correction4 = new Array;// correction4[i] corrigé de TAB_Verif4[i] (si faux)
 
-  var Score;  // Score du test
+  var score;  // Score du test
   var temps;  // Temps du test
-  var Chargement = false; // Si Chargement=false (le test est lancé pour la 1ere fois)
+  var chargement = false; // Si chargement=false alors le test est lancé pour la 1ere fois
 
 
   // Initialisation de la page
@@ -107,6 +162,16 @@
       verbsGlobalList.push(verbsList03);
     if(document.getElementById("checklist04").checked == true)
       verbsGlobalList.push(verbsList04);
+    if(document.getElementById("checklist05").checked == true)
+      verbsGlobalList.push(verbsList05);
+    if(document.getElementById("checklist06").checked == true)
+      verbsGlobalList.push(verbsList06);
+    if(document.getElementById("checklist07").checked == true)
+      verbsGlobalList.push(verbsList07);
+    if(document.getElementById("checklist08").checked == true)
+      verbsGlobalList.push(verbsList08);
+    if(document.getElementById("checklist09").checked == true)
+      verbsGlobalList.push(verbsList09);
 
     if(verbsGlobalList.length == 0)
       document.getElementById("startupButton").setAttribute("disabled", "disabled");
@@ -164,8 +229,8 @@
     ModifiePosition(mainfrm, 1)
     temps = 0;
 
-    if (Chargement == false) { incrTemps() };
-    Chargement = true;
+    if (chargement == false) { incrTemps() };
+    chargement = true;
 
   }
 
@@ -202,7 +267,7 @@
 
     clearTimeout(timer);
     RefreshTabs(mainfrm);
-    Score = 0;
+    score = 0;
 
     var i;
     var k;
@@ -225,7 +290,7 @@
 
       if (TAB_Tense[i] != 1) {
         if (Comparer(TAB_Verif1[i], global_TAB_INF[k]) == true) {
-          Score++
+          score++
         } else {
           Correction1[i] = "(" + global_TAB_INF[k] + ")"
         }
@@ -233,7 +298,7 @@
 
       if (TAB_Tense[i] != 2) {
         if (Comparer(TAB_Verif2[i], global_TAB_SP[k]) == true) {
-          Score++
+          score++
         } else {
           Correction2[i] = "(" + global_TAB_SP[k] + ")"
         }
@@ -241,7 +306,7 @@
 
       if (TAB_Tense[i] != 3) {
         if (Comparer(TAB_Verif3[i], global_TAB_PP[k]) == true) {
-          Score++
+          score++
         } else {
           Correction3[i] = "(" + global_TAB_PP[k] + ")"
         }
@@ -249,7 +314,7 @@
 
       if (TAB_Tense[i] != 4) {
         if (Comparer(TAB_Verif4[i], global_TAB_TRAD[k]) == true) {
-          Score++
+          score++
         } else {
           Correction4[i] = "(" + global_TAB_TRAD[k] + ")"
         }
@@ -418,7 +483,7 @@
       genHtm = genHtm + '        <br /> '
 
       if (k == 0) {
-        genHtm = genHtm + ' Score: ' + Score + '/' + (nbTestVerbs * 4 - nbTestVerbs)
+        genHtm = genHtm + ' Score: ' + score + '/' + (nbTestVerbs * 4 - nbTestVerbs)
         genHtm = genHtm + '<br /> Durée du test: ' + DeSecAMin(temps)
       }
       genHtm = genHtm + '   </font> </b></center>  <br />  <table align="center" border="2">';
@@ -602,6 +667,31 @@
           <tr>
             <td>
               <input type="checkbox" id="checklist04" onchange="buildVerbArrays()" /><label for="checkbox" style="color:#000000">Liste 4</label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input type="checkbox" id="checklist05" onchange="buildVerbArrays()" /><label for="checkbox" style="color:#000000">Liste 5</label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input type="checkbox" id="checklist06" onchange="buildVerbArrays()" /><label for="checkbox" style="color:#000000">Liste 6</label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input type="checkbox" id="checklist07" onchange="buildVerbArrays()" /><label for="checkbox" style="color:#000000">Liste 7</label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input type="checkbox" id="checklist08" onchange="buildVerbArrays()" /><label for="checkbox" style="color:#000000">Liste 8</label>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input type="checkbox" id="checklist09" onchange="buildVerbArrays()" /><label for="checkbox" style="color:#000000">Liste 9</label>
             </td>
           </tr>
           <tr>
