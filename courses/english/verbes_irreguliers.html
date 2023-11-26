@@ -115,7 +115,7 @@
                           <input type="text" name="BT_timer" value="00 : 00" style="border: outset; background: #CCCCCC; color: #000000;text-align: center" readonly="readonly" />
                         </td>
                         <td>
-                          <font color="#000000"><input type="button" class="button" hidden id="validButton" value="Corriger" style="border-style: ridge;" onclick="AfficheResultat (mainfrm,0)"></font>
+                          <font color="#000000"><input type="button" class="button" hidden id="validButton" value="Corriger" style="border-style: ridge;" onclick="displayResult(mainfrm,0)"></font>
                         </td>
                       </tr>
                     </table>
@@ -197,7 +197,7 @@
                   </center>
 
                   <p align="center">
-                    <font color="#000000"><input type="button" value="Table des verbes irréguliers" onclick="AfficheResultat (mainfrm,1)"></font>
+                    <font color="#000000"><input type="button" value="Table des verbes irréguliers" onclick="displayResult(mainfrm,1)"></font>
                   </p>
                 </div>              
 
@@ -726,7 +726,7 @@
     // Génération d'un document HTML pour
     // k=0 : affiche le résulat du test
     // k=1 affiche la liste des verbes irréguliers
-    function AfficheResultat(mainfrm, k) {
+    function displayResult(mainfrm, k) {
 
       var max;
 
@@ -756,28 +756,36 @@
           console.log(TAB_Verif4);
         }
 
-        var genHtm;
+        var genHtm = '<html>';
+        
+        // head
+        genHtm = genHtm + '<head><meta charset="utf-8"><link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900" rel="stylesheet"><title>Test des verbes irréguliers</title><link href="../../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"><link rel="stylesheet" href="../../assets/css/fontawesome.css"><link rel="stylesheet" href="../../assets/css/templatemo-grad-school.css"><link rel="stylesheet" href="../../assets/css/owl.css"><link rel="stylesheet" href="../../assets/css/lightbox.css"></head>';
+        
+        genHtm = genHtm + '<body>';
+        // body header
+        genHtm = genHtm + '<header class="main-header clearfix" role="header"><div class="logo"><a href="../../index.html"><em>New</em> School</a></div></header>';
+        
+        // Main Area
+        genHtm = genHtm + '<section class="section courses" data-section="section2"><div class="container"><div class="row">';
 
-        genHtm = '<html><body bgcolor="#000066"  text="#FFFFFF">';
-
+        // Check title page to display
         if (k == 0) {
-          genHtm = genHtm + '<center><font size="5"  color="#00FF99"><u><b>Correction</b></u></font></center>';
+          genHtm = genHtm + '<div class="col-md-12"><div class="section-heading"><h2>Correction</h2></div>';
         } else {
-          genHtm = genHtm + '<center><font size="5"  color="#00FF99"><u>Table des verbes irréguliers</u></font></center>';
+          genHtm = genHtm + '<div class="col-md-12"><div class="section-heading"><h2>Table des verbes irréguliers</h2></div>';
         }
 
-
-        genHtm = genHtm + '       <br />';
-
-        genHtm = genHtm + ' <hr align="center" />'
-        genHtm = genHtm + '       <center><b> <font size="3" color="#CC0000">'
-        genHtm = genHtm + '        <br /> '
-
+        // Score
         if (k == 0) {
+          genHtm = genHtm + '<div class="section-heading">'
+          genHtm = genHtm + '<b> <font size="3" color="#f5a425">'
           genHtm = genHtm + ' Score: ' + score + '/' + (nbTestVerbs * 4 - nbTestVerbs)
           genHtm = genHtm + '<br /> Durée du test: ' + DeSecAMin(temps)
+          genHtm = genHtm + '</font></b></div>';
         }
-        genHtm = genHtm + '   </font> </b></center>  <br />  <table align="center" border="2">';
+        
+        // Table headers
+        genHtm = genHtm + '   <div class="section-heading"><table id="myTable" align="center" border="2">';
         genHtm = genHtm + '        <tr>';
         genHtm = genHtm + '          <td><b><center>Verb n°</center></b></td>';
         genHtm = genHtm + '                <td><b><center>Infinitif</center></b></td>';
@@ -785,24 +793,27 @@
         genHtm = genHtm + '          <td><b><center>Participe Passé</center></b></td>';
         genHtm = genHtm + '          <td><b><center>Traduction</center></b></td>';
         genHtm = genHtm + '        </tr>';
-
-
-
-
+        // Table content
         for (var i = 1; i <= max; i++) {
-
           genHtm = genHtm + '  <tr> <td><center><b>' + i + '</b></center></td>';
-
           genHtm = genHtm + '<td bgcolor="#000000">' + TAB_Verif1[i] + '<font size="3" color="#FF0000"><b>' + Correction1[i] + '</b></font></td>';
           genHtm = genHtm + '<td bgcolor="#000000">' + TAB_Verif2[i] + '<font size="3" color="#FF0000"><b>' + Correction2[i] + '</b></font></td>';
           genHtm = genHtm + '<td bgcolor="#000000">' + TAB_Verif3[i] + '<font size="3" color="#FF0000"><b>' + Correction3[i] + '</b></font></td>';
           genHtm = genHtm + '<td bgcolor="#000000">' + TAB_Verif4[i] + '<font size="3" color="#FF0000"><b>' + Correction4[i] + '</b></font></td>';
 
         }
+        genHtm = genHtm + '</tr></table></div></div>';
+        
+        // Return button
+        genHtm = genHtm + '<div class="col-md-12"><center><input type="button" onclick="window.location.reload(false)" value="Retour"/></center> </div>'
 
+        genHtm = genHtm + '</div></div></section>';
 
-        genHtm = genHtm + '  </tr>  </table> <br />  </body></html>';
-        genHtm = genHtm + '<center><input type="button" onclick="window.location.reload(false)" value="Retour"/></center> </form>'
+        // body footer
+        genHtm = genHtm + '<footer><div class="container"><div class="row"><div class="col-md-12"><p><i class="fa fa-copyright"></i> Copyright 2023 par New School | Design: <a href="https://templatemo.com" rel="sponsored" target="_parent">TemplateMo</a></p></div></div></div></footer>';
+
+        genHtm = genHtm + ' <br />  </body></html>';
+
 
         document.write(genHtm);
 
