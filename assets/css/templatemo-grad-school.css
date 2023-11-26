@@ -36,6 +36,11 @@ p {
     line-height: 22px;
 }
 
+#myTable {
+  color: white;
+  border: 1px solid white;
+}
+
 
 .section-heading {
     text-align: center;
