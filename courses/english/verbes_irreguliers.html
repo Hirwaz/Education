@@ -131,7 +131,7 @@
                 </div>
 
 
-                <div>
+                <div id="testConfigForm" >
                   <center>
                     <div>
                       <h4><em>CONFIGURATION</em> DU TEST</h4>
@@ -140,7 +140,7 @@
                       <tr>
                         <td>
                           <span class="nbVerbsConfig" id="nbVerbsConfig" style="color:#000000"></span>
-                          <input type="text" name="txt_nbverbs" size="3" value="10">
+                          <input type="text" name="txt_nbverbs" size="3" value="25">
                         </td>
                       </tr>
                       <tr>
@@ -161,31 +161,6 @@
                       <tr>
                         <td>
                           <input type="checkbox" id="checklist04" onchange="buildVerbArrays()" /><label for="checkbox" style="color:#000000">Liste 4</label>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <input type="checkbox" id="checklist05" onchange="buildVerbArrays()" /><label for="checkbox" style="color:#000000">Liste 5</label>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <input type="checkbox" id="checklist06" onchange="buildVerbArrays()" /><label for="checkbox" style="color:#000000">Liste 6</label>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <input type="checkbox" id="checklist07" onchange="buildVerbArrays()" /><label for="checkbox" style="color:#000000">Liste 7</label>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <input type="checkbox" id="checklist08" onchange="buildVerbArrays()" /><label for="checkbox" style="color:#000000">Liste 8</label>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <input type="checkbox" id="checklist09" onchange="buildVerbArrays()" /><label for="checkbox" style="color:#000000">Liste 9</label>
                         </td>
                       </tr>
                       <tr>
@@ -292,18 +267,17 @@
   <script language="JavaScript" type="text/javascript">
 
     var verbsList01 = new Array(
-      new Array("Be", "was/were", "Been", "être"),
+      new Array("Be", "was, were", "Been", "être"),
       new Array("Beat", "Beat", "Beaten", "Battre"),
       new Array("Become", "Became", "Become", "Devenir"),
       new Array("Begin", "Began", "Begun", "Commencer"),
       new Array("Bet", "Bet", "Bet", "Parier"),
+      new Array("Blind", "Bound", "Bound", "Relier"),
       new Array("Bite", "Bit", "Bitten", "Mordre"),
       new Array("Bleed", "Bled", "Bled", "Saigner"),
       new Array("Blow", "Blew", "Blown", "Souffler"),
       new Array("Break", "Broke", "Broken", "Casser"),
-      new Array("Bring", "Brought", "Brought", "Apporter")
-    )
-    var verbsList02 = new Array(
+      new Array("Bring", "Brought", "Brought", "Apporter"),
       new Array("Build", "Built", "Built", "Construire"),
       new Array("Burn", "Burnt", "Burnt", "Brûler"),
       new Array("Burst", "Burst", "Burst", "éclater"),
@@ -313,87 +287,98 @@
       new Array("Come", "Came", "Come", "Venir"),
       new Array("Cost", "Cost", "Cost", "Coûter"),
       new Array("Cut", "Cut", "Cut", "Couper"),
-      new Array("Do", "Did", "Done", "Faire")
-    )
-    var verbsList03 = new Array(
+      new Array("Do", "Did", "Done", "Faire"),
       new Array("Draw", "Drawn", "Drew", "Dessiner"),
+      new Array("Dream", "Dreamt", "Dreamt", "Rêver"),
       new Array("Drink",	"Drank",	"Drunk",	"Boire"),
       new Array("Drive",	"Drove",	"Driven",	"Conduire"),
+
+    )
+    var verbsList02 = new Array(
       new Array("Eat",	"Ate",	"Eaten",	"Manger"),
       new Array("Fall",	"Fell",	"Fallen",	"Tomber"),
       new Array("Feed",	"Fed",	"Fed",	"Nourrir"),
-      new Array("Feel",	"Felt",	"Felt",	"Se sentir/Ressentir"),
+      new Array("Feel",	"Felt",	"Felt",	"Se sentir, Ressentir"),
       new Array("Fight", "Fought",	"Fought",	"Se battre"),
       new Array("Find",	"Found",	"Found",	"Trouver"),
-      new Array("Fly",	"Flew",	"Flown",	"Voler")
-    )
-    var verbsList04 = new Array(
+      new Array("Fly",	"Flew",	"Flown",	"Voler"),
       new Array("Forget",	"Forgot",	"Forgotten",	"Oublier"),
+      new Array("Forgive",	"Forgave",	"Forgiven",	"Pardonner"),
       new Array("Freeze",	"Froze",	"Frozen",	"Geler"),
       new Array("Get",	"Got",	"Gotten", "Got",	"Obtenir"),
       new Array("Give",	"Gave",	"Given",	"Donner"),
       new Array("Go",	"wWnt",	"Gone",	"Aller"),
       new Array("Grow",	"grew",	"grown",	"Grandir"),
+      new Array("Hang",	"Hung",	"Hung",	"Prendre, Suspendre"),
       new Array("Have",	"Had",	"Had",	"Avoir"),
       new Array("Hear",	"Heard",	"Heard",	"Entendre"),
       new Array("Hide",	"Hid",	"Hidden",	"Cacher"),
-      new Array("Hit",	"Hit",	"Hit",	"Frapper")
+      new Array("Hit",	"Hit",	"Hit",	"Frapper"),
+      new Array("Hold",	"Held",	"Held", "Tenir"),
+      new Array("Hurt",	"Hurt",	"Hurt",	"Blesser, Faire mal, Avoir mal"),
+      new Array("Keep",	"Kept",	"Kept",	"garder"),
+      new Array("Know",	"Knew",	"Known", "Savoir, Connaître"),
+      new Array("Lay",	"Laid",	"Laid", "Poser"),
+      new Array("Learn",	"Learnt",	"Learnt",	"Apprendre"),
+      
     )
-    var verbsList05 = new Array(
-      new Array("hold",	"held",	"held", "tenir"),
-      new Array("hurt",	"hurt",	"hurt",	"blesser"),
-      new Array("keep",	"kept",	"kept",	"garder"),
-      new Array("know",	"knew",	"known", "connaître/savoir"),
-      new Array("learn",	"learnt",	"learnt",	"apprendre"),
-      new Array("leave",	"left",	"left",	"laisser/quitter/partir"),
-      new Array("lose",	"lost",	"lost",	"perdre"),
-      new Array("make",	"made",	"made",	"fabriquer"),
-      new Array("mean",	"meant",	"meant",	"signifier"),
-      new Array("meet",	"met",	"met",	"rencontrer")
+    var verbsList03 = new Array(
+      new Array("Leave",	"Left",	"Left",	"Laisser, Quitter, Partir"),
+      new Array("Lend",	"Lent",	"Lent",	"Prêter"),
+      new Array("Let",	"Let",	"Let",	"Permettre, Laisser"),
+      new Array("Lie",	"Lay",	"Lain",	"S'allonger"),
+      new Array("Lose",	"Lost",	"Lost",	"Perdre"),
+      new Array("Make",	"Made",	"Made",	"Faire, Fabriquer"),
+      new Array("Mean",	"Meant",	"Meant",	"Vouloir dire"),
+      new Array("Meet",	"Met",	"Met",	"Rencontrer"),
+      new Array("Pay",	"Paid",	"Paid",	"Payer"),
+      new Array("Put", "Put",	"Put",	"Mettre"),
+      new Array("Read",	"Read",	"Read",	"Lire"),
+      new Array("Rent",	"Rent",	"Rent",	"Louer"),
+      new Array("Ride",	"Rode",	"Ridden",	"Aller à bicyclette"),
+      new Array("Ring",	"Rang",	"Rung",	"Sonner, Téléphoner"),
+      new Array("Rise",	"Rose",	"Risen",	"Monter, S'élever"),
+      new Array("Run",	"Ran",	"Run",	"Courir"),
+      new Array("Say",	"Said",	"Said",	"Dire"),
+      new Array("See",	"Saw",	"Seen",	"Voir"),
+      new Array("Sell",	"Sold",	"Sold",	"Vendre"),
+      new Array("Send",	"Sent",	"Sent",	"Envoyer"),
+      new Array("Set",	"Set",	"Set",	"Poser, Placer, Mettre"),
+      new Array("Shake",	"Shook",	"Shaken",	"Trembler"),
+      new Array("Shine",	"Shone",	"Shone",	"Briller"),
+      new Array("Shoot",	"Shot",	"Shot",	"Tirer"),
+      new Array("Show",	"Showed",	"Shown",	"Montrer"),
+      
     )
-    var verbsList06 = new Array(
-      new Array("pay",	"paid",	"paid",	"payer"),
-      new Array("put", "put",	"put",	"mettre"),
-      new Array("read",	"read",	"read",	"lire"),
-      new Array("ride",	"rode",	"ridden",	"aller à bicyclette"),
-      new Array("ring",	"rang",	"rung",	"sonner, téléphoner"),
-      new Array("run",	"ran",	"run",	"courir"),
-      new Array("say",	"said",	"said",	"dire"),
-      new Array("see",	"saw",	"seen",	"voir"),
-      new Array("sell",	"sold",	"sold",	"vendre"),
-      new Array("send",	"sent",	"sent",	"envoyer")
+    var verbsList04 = new Array(
+      new Array("Shut",	"Shut",	"Shut",	"Fermer"),
+      new Array("Sing",	"Sang",	"Sung",	"Chanter"),
+      new Array("Sit",	"Sat",	"Sat",	"S'asseoir"),
+      new Array("Sleep",	"Slept",	"Slept",	"Dormir"),
+      new Array("Smell",	"Smelt",	"Smelt",	"Sentir"),
+      new Array("Speak",	"Spoke",	"Spoken",	"Parler"),
+      new Array("Spend",	"Spent",	"Spent",	"Dépenser, Dasser"),
+      new Array("Spread",	"Spread",	"Spread",	"étaler, Répandre"),
+      new Array("Stand",	"Stood",	"Stood",	"Se tenir debout"),
+      new Array("Steal",	"Stole",	"Stolen",	"Voler, dérober"),
+      new Array("Strike",	"Struck",	"Struck",	"Frapper, Donner un coup, passer un accord"),
+      new Array("Swear",	"Swore",	"Sworn",	"Jurer"),
+      new Array("Swim",	"Swam",	"Swum",	"Nager"),
+      new Array("Take",	"Took",	"Taken",	"Prendre"),
+      new Array("Teach",	"Taught",	"Taught",	"Enseigner"),
+      new Array("Tear",	"Tore",	"Torn",	"Déchirer"),
+      new Array("Tell",	"Told",	"Told",	"Dire, Raconter"),
+      new Array("Think",	"Thought",	"Thought",	"Penser"),
+      new Array("Throw",	"Threw",	"Thrown",	"Jeter"),
+      new Array("Understand",	"Understood",	"Understood",	"Comprendre"),
+      new Array("Upset",	"Upset",	"Upset",	"Contrarier"),
+      new Array("Wake up",	"Woke up",	"Woken up",	"Réveiller"),
+      new Array("Wear",	"Wore",	"Worn",	"Porter"),
+      new Array("Win",	"Won",	"Won",	"Gagner"),
+      new Array("Write",	"Wrote",	"Written",	"écrire")
+      
     )
-    var verbsList07 = new Array(
-      new Array("set",	"set",	"set",	"fixer"),
-      new Array("shake",	"shook",	"shaken",	"secouer"),
-      new Array("shine",	"shone",	"shone",	"briller"),
-      new Array("shoot",	"shot",	"shot",	"tirer"),
-      new Array("shut",	"shut",	"shut",	"fermer"),
-      new Array("sing",	"sang",	"sung",	"chanter"),
-      new Array("sit",	"sat",	"sat",	"s'asseoir"),
-      new Array("sleep",	"slept",	"slept",	"dormir"),
-      new Array("smell",	"smelt",	"smelt",	"sentir"),
-      new Array("speak",	"spoke",	"spoken",	"parler")
-    )
-    var verbsList08 = new Array(
-      new Array("spend",	"spent",	"spent",	"dépenser/passer(du temps)"),
-      new Array("stand",	"stood",	"stood",	"se tenir debout"),
-      new Array("steal",	"stole",	"stolen",	"voler/dérober"),
-      new Array("swim",	"swam",	"swum",	"nager"),
-      new Array("take",	"took",	"taken",	"prendre"),
-      new Array("teach",	"taught",	"taught",	"enseigner"),
-      new Array("tear",	"tore",	"torn",	"déchirer"),
-      new Array("tell",	"told",	"told",	"dire/raconter"),
-      new Array("think",	"thought",	"thought",	"penser"),
-      new Array("throw",	"threw",	"thrown",	"jeter")
-    )
-    var verbsList09 = new Array(
-      new Array("understand",	"understood",	"understood",	"comprendre"),
-      new Array("wake up",	"woke up",	"woken up",	"réveiller"),
-      new Array("wear",	"wore",	"worn",	"porter"),
-      new Array("win",	"won",	"won",	"gagner"),
-      new Array("write",	"wrote",	"written",	"écrire")
-    )
+    
     var verbsGlobalList = new Array()
     
     var global_TAB_INF = new Array("*");
@@ -453,16 +438,6 @@
         verbsGlobalList.push(verbsList03);
       if(document.getElementById("checklist04").checked == true)
         verbsGlobalList.push(verbsList04);
-      if(document.getElementById("checklist05").checked == true)
-        verbsGlobalList.push(verbsList05);
-      if(document.getElementById("checklist06").checked == true)
-        verbsGlobalList.push(verbsList06);
-      if(document.getElementById("checklist07").checked == true)
-        verbsGlobalList.push(verbsList07);
-      if(document.getElementById("checklist08").checked == true)
-        verbsGlobalList.push(verbsList08);
-      if(document.getElementById("checklist09").checked == true)
-        verbsGlobalList.push(verbsList09);
 
       if(verbsGlobalList.length == 0)
         document.getElementById("startupButton").setAttribute("disabled", "disabled");
@@ -495,8 +470,12 @@
     // Démarrer le test
     function Demarrer(mainfrm) {
 
-      // Afiche le formulaire de test
+      // Affiche le formulaire de test
       testForm.removeAttribute("hidden");
+
+      // Cache le formulaire de configuration du test
+      var x = document.getElementById("testConfigForm");
+      x.style.display = "none";
 
       // initialize le nombre de verbe du test courant
       nbTestVerbs = mainfrm.txt_nbverbs.value;
